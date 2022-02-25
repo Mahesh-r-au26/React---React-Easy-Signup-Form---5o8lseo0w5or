@@ -8,8 +8,8 @@ function App() {
   const initialValue = {
     email: "",
     password: "",
-    name: "",
-    selected: false
+    name: ""
+    // selected: false
   };
   const [formValue, setfrovalue] = useState(initialValue);
   const [formerror, setformerror] = useState({});
@@ -45,10 +45,13 @@ function App() {
 
   const handelSubmit = (e) => {
     e.preventDefault();
-    setformerror(signUpFormValidation(formValue));
-    if (Object.keys(formerror).length === 0) {
+    const allerror = signUpFormValidation(formValue);
+    if (Object.keys(allerror).length === 0) {
       setisSubmit(true);
-      console.log("sumbti");
+      setformerror(null);
+      return <h1>thanks for applying </h1>;
+    } else {
+      setformerror(allerror);
     }
   };
 
@@ -71,7 +74,7 @@ function App() {
           value={formValue.name}
           onChange={handelchangeu}
         ></input>
-        {formerror.name ? <p>{formerror.name}</p> : null}
+        {formerror.name && <p>{formerror.name}</p>}
         <label htmlFor="email">Email</label>
         <input
           id="email"
@@ -80,7 +83,7 @@ function App() {
           value={formValue.email}
           onChange={handelchangee}
         ></input>
-        {formerror.email ? <p>{formerror.email}</p> : null}
+        {formerror.email && <p>{formerror.email}</p>}
         <label htmlFor="password">password</label>
         <input
           id="password"
@@ -89,7 +92,7 @@ function App() {
           value={formValue.password}
           onChange={handelchangep}
         ></input>
-        {formerror.password ? <p>{formerror.password}</p> : null}
+        {formerror.password && <p>{formerror.password}</p>}
         <input
           type="checkbox"
           name="checkox"
@@ -98,7 +101,9 @@ function App() {
           // onChange={handelchange}
         ></input>
         <label htmlFor="checkbox"> this is check box</label>
-        <button onClick={handelSubmit}>Signup</button>
+        <button onClick={handelSubmit} type="submit">
+          Signup
+        </button>
       </form>
     </>
   );
